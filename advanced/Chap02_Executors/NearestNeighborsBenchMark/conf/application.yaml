@@ -1,0 +1,40 @@
+version: 1.0
+released: 2012-11-30
+
+# Protocols
+protocols:
+   - http
+   - https
+
+# Users
+users:
+    tom: passwd
+    bob: passwd
+    
+# Tasks
+tasks:
+    - title: ParallelGroupNonSort
+      threshold: 10
+      parallel: true
+      group: true
+      sort: false
+    - title: ParallelGroupSort
+      threshold: 10
+      parallel: true
+      group: true
+      sort: true
+    - title: ParallelIndividualNonSort
+      threshold: 10
+      parallel: true
+      group: false
+      sort: false
+    - title: ParallelIndividualSort
+      threshold: 10
+      parallel: true
+      group: false
+      sort: true
+    - title: Serial
+      threshold: 10
+      parallel: false
+      group: false
+      sort: false
