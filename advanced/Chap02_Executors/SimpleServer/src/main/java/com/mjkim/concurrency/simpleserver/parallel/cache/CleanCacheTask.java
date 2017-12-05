@@ -16,10 +16,11 @@ public class CleanCacheTask implements Runnable {
 		try {
 			while (!Thread.currentThread().interrupted()) {
 				TimeUnit.SECONDS.sleep(10);
-				Logger.sendMessage("Clean Cache Task started");
+				Logger.sendMessage("Clean Cache Task started: " + Thread.currentThread().getName());
 				cache.cleanCache();
 			}
 		} catch (InterruptedException e) {
+			System.err.println("thread: " + Thread.currentThread().getName());
 		}
 	}
 }

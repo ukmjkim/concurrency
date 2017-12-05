@@ -46,8 +46,6 @@ public class SerialServer {
 					e.printStackTrace();
 				}
 			} while (!stopped);
-			serverSocket.close();
-			System.out.println("Closing socket");
 		}
 		System.out.println("Stopping...");
 		System.exit(0);
@@ -55,8 +53,8 @@ public class SerialServer {
 
 	public static void shutdown() {
 		stopped = true;
-		System.out.println("Shuttingdown the logger");
-		Logger.sendMessage("Shuttingdown the logger");
+		System.out.println("Shutting down the logger");
+		Logger.sendMessage("Shutting down the logger");
 		Logger.shutdown();
 	}
 }

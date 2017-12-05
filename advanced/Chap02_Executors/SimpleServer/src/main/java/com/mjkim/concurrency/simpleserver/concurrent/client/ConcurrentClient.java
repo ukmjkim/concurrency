@@ -44,7 +44,7 @@ public class ConcurrentClient implements Runnable {
 					String command = writer.toString();
 					out.println(command);
 					String output = in.readLine();
-					System.err.println("OUTPUT: " + output);
+					// System.err.println("OUTPUT: " + output);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

@@ -24,7 +24,7 @@ public class ConcurrentServer {
 		System.out.println("Initialization completed.");
 		Logger.sendMessage("Initialization completed.");
 
-		try (ServerSocket serverSocket = new ServerSocket(Constants.CONCURRENT_PORT)) {
+		try (ServerSocket serverSocket = new ServerSocket(Constants.CONCURRENT_PORT);) {
 			do {
 				System.out.println("Waiting a connection from a client...");
 				Logger.sendMessage("Waiting a connection from a client...");
@@ -36,16 +36,8 @@ public class ConcurrentServer {
 					e.printStackTrace();
 				}
 			} while (!stopped);
-
-			executor.awaitTermination(1, TimeUnit.DAYS);
-
-			System.out.println("Shutting down cache");
-			cache.shutdown();
-			System.out.println("Cache ok");
-
-			serverSocket.close();
-			System.out.println("Socket ok");
-			System.out.println("Main server thread ended");
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -64,8 +56,19 @@ public class ConcurrentServer {
 		executor.shutdown();
 		System.out.println("Executor ok");
 		System.out.println("Shutting down logger");
-		Logger.sendMessage("Shuttingdown the logger");
+		Logger.sendMessage("Shutting down the logger");
 		Logger.shutdown();
 		System.out.println("Logger ok");
+
+		try {
+			executor.awaitTermination(1, TimeUnit.DAYS);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		System.out.println("Shutting down cache");
+		cache.shutdown();
+		System.out.println("Cache ok");
 	}
 }

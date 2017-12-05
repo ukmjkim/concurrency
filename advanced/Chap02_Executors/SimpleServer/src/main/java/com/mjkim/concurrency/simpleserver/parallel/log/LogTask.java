@@ -15,12 +15,13 @@ public class LogTask implements Runnable {
 		try {
 			while (!Thread.currentThread().interrupted()) {
 				TimeUnit.SECONDS.sleep(10);
-				Logger.sendMessage("LogTask started");
+				Logger.sendMessage("LogTask started: " + Thread.currentThread().getName());
 				Logger.writeLogs();
 			}
 		} catch (InterruptedException e) {
-
+			System.out.println("thread: " + Thread.currentThread().getName());
 		}
 		Logger.writeLogs();
+		System.out.println("LogTask finished: " + Thread.currentThread().getName());
 	}
 }
