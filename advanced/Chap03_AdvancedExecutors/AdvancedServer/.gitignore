@@ -3,4 +3,5 @@
 .project
 
 target
+bin
 output/server.log

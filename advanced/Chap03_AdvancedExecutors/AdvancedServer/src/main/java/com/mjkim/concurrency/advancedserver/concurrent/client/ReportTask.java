@@ -43,7 +43,7 @@ public class ReportTask implements Runnable {
 			String command = writer.toString();
 			out.println(command);
 			String output = in.readLine();
-			System.out.printf("Report Data Received: %c\n", output.substring(0, 1));
+			System.out.printf("Report Data Received: %s\n", output.substring(0, 1));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
