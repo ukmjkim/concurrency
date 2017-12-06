@@ -45,6 +45,7 @@ public class QueryTask implements Runnable {
 			String command = writer.toString();
 			out.println(command);
 			String output = in.readLine();
+			System.out.printf("Query Data Received: %c\n", output.substring(0, 1));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

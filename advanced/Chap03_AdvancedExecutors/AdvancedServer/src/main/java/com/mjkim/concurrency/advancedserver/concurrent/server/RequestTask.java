@@ -28,6 +28,7 @@ public class RequestTask implements Runnable {
 		this.taskController = taskController;
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
 	public void run() {
 

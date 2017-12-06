@@ -15,7 +15,6 @@ import com.mjkim.concurrency.advancedserver.concurrent.command.Command;
 import com.mjkim.concurrency.advancedserver.concurrent.executor.ServerTask;
 import com.mjkim.concurrency.advancedserver.parallel.cache.ParallelCache;
 import com.mjkim.concurrency.advancedserver.parallel.log.Logger;
-import com.mjkim.concurrency.advancedserver.wdi.data.WDIDAO;
 
 public class ConcurrentServer {
 	private static ParallelCache cache;
@@ -27,7 +26,6 @@ public class ConcurrentServer {
 	private static ServerSocket serverSocket;
 
 	public static void main(String[] args) throws IOException {
-		WDIDAO dao = WDIDAO.getDAO();
 		cache = new ParallelCache();
 		Logger.initializeLog();
 		pendingConnections = new LinkedBlockingQueue<Socket>();
