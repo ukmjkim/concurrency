@@ -1,6 +1,10 @@
 ![alt text](https://raw.githubusercontent.com/ukmjkim/concurrency/master/advanced/Chap03_AdvancedExecutors/AdvancedServer/docs/SequenceDiagram.png)
 
 
+```
+mvn exec:java -Dexec.mainClass=com.mjkim.concurrency.advancedserver.concurrent.server.ConcurrentServer
+mvn exec:java -Dexec.mainClass=com.mjkim.concurrency.advancedserver.concurrent.client.MultipleConcurrentClients
+```
 
 https://www.websequencediagrams.com/
 
