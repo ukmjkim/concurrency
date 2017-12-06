@@ -59,15 +59,6 @@ public class ConcurrentServer {
 		return cache;
 	}
 
-	public static void shutdown() {
-		stopped = true;
-		try {
-			serverSocket.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
 	private static void finishServer() {
 		System.out.println("Shutting down the server...");
 		task.shutdown();
@@ -81,6 +72,15 @@ public class ConcurrentServer {
 		Logger.shutdown();
 		System.out.println("Logger ok");
 		System.out.println("Main server thread ended");
+	}
+
+	public static void shutdown() {
+		stopped = true;
+		try {
+			serverSocket.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void cancelTasks(String username) {
