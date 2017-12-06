@@ -1,4 +1,4 @@
-![alt text] (https://raw.githubusercontent.com/ukmjkim/concurrency/master/advanced/Chap03_AdvancedExecutors/AdvancedServer/docs/SequenceDiagram.png)
+![alt text](https://raw.githubusercontent.com/ukmjkim/concurrency/master/advanced/Chap03_AdvancedExecutors/AdvancedServer/docs/SequenceDiagram.png)
 
 
 
