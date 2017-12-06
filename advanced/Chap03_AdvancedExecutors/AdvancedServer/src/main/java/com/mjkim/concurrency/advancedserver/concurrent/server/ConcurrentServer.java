@@ -95,7 +95,9 @@ public class ConcurrentServer {
 			if (!(command instanceof CancelCommand) && task.cancel(true)) {
 				taskNumber++;
 				Logger.sendMessage(
-						"Task with code " + command.hashCode() + "cancelled: " + command.getClass().getSimpleName());
+						"Task with hashCode " + command.hashCode() + "(username:" + command.getUsername()
+								+ ", priority: " + command.getPriority() + ") has cancelled: "
+								+ command.getClass().getSimpleName());
 				it.remove();
 			}
 		}
@@ -110,7 +112,8 @@ public class ConcurrentServer {
 
 		userTasks.remove(command);
 
-		String message = "Task with code " + command.hashCode() + " has finished";
+		String message = "Task with hashCode " + command.hashCode() + "(username:" + command.getUsername()
+				+ ", priority: " + command.getPriority() + ") has finished";
 		Logger.sendMessage(message);
 
 	}
