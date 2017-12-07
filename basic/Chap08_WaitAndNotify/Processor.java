@@ -2,9 +2,11 @@ import java.util.Scanner;
 
 public class Processor {
   public void produce() throws InterruptedException {
-    System.out.println("Producer thread running...");
-    this.wait();
-    System.out.println("Resumed.");
+    synchronized(this) {
+      System.out.println("Producer thread running...");
+      wait();
+      System.out.println("Resumed.");
+    }
   }
 
   public void consume() throws InterruptedException {
