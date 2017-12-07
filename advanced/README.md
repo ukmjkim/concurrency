@@ -1,3 +1,4 @@
+```
 mvn archetype:generate \
           -DinteractiveMode=false \
           -DarchetypeGroupId=org.openjdk.jmh \
@@ -5,4 +6,5 @@ mvn archetype:generate \
           -DgroupId=com.mjkim.concurrency.knn \
           -DartifactId=NearestNeighbors \
           -Dversion=1.0
+```
 
