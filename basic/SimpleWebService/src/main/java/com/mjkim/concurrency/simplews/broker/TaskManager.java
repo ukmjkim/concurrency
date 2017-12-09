@@ -17,6 +17,7 @@ import java.util.concurrent.TimeoutException;
 import com.mjkim.concurrency.simplews.message.DBQueryRequest;
 import com.mjkim.concurrency.simplews.message.FaultResponse;
 import com.mjkim.concurrency.simplews.message.Request;
+import com.mjkim.concurrency.simplews.message.Response;
 import com.mjkim.concurrency.simplews.message.WS1Request;
 import com.mjkim.concurrency.simplews.pool.WSThreadFactory;
 import com.mjkim.concurrency.simplews.pool.WSThreadPoolExecutor;
@@ -40,7 +41,11 @@ public class TaskManager {
 		requestList.add(new DBQueryRequest("DBQueryRequest_2"));
 		requestList.add(new DBQueryRequest("DBQueryRequest_3"));
 
-		Map responseMap = (new TaskManager()).processRequest(requestList);
+		Map<Request, Response> responseMap = (new TaskManager()).processRequest(requestList);
+
+		for (Map.Entry<Request, Response> entry : responseMap.entrySet()) 
+            System.out.println("Key = " + entry.getKey() +
+                             ", Value = " + entry.getValue());
 	}
 
 	void init() {
@@ -116,7 +121,7 @@ public class TaskManager {
 		case WS1:
 			return webServiceExecutor;
 		case WS2:
-			return dbExecutor;
+			return webServiceExecutor;
 		case DB_UPDATE:
 			return dbExecutor;
 		}

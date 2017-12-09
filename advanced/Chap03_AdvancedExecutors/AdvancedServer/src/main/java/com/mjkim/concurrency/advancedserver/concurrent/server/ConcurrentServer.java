@@ -1,5 +1,75 @@
 package com.mjkim.concurrency.advancedserver.concurrent.server;
 
+/*
+
+@startuml
+start
+split
+	repeat
+		:Accepting a new client;
+		:Adding the new client socket to queue;
+		-[#black,dotted]->
+		#HotPink:LinkedBlockingQueue<Socket>|
+	repeat while (shutdown == false?)
+split again
+	fork
+		:RequestTak(Runnable) Initialized;
+		split
+		fork
+			:ServerExecutor Initialized;
+			-[#black,dotted]->
+			#SkyBlue:ThreadPoolService|
+			repeat
+				:beforeExecute();
+				:Run Command();
+				:afterExecute();
+			repeat while (submitted?)
+		end fork
+		split again
+			repeat
+			#HotPink:LinkedBlockingQueue<Socket>|
+			-[#black,dotted]->
+			if (new socket?) then (yes)
+				if (the request exists in cache?) then (yes)
+					:Return cached data;
+				else (no)
+					:get a command from Factory;
+					:Executor submit(command);
+					-[#black,dotted]->
+					#SkyBlue:ThreadPoolService|
+					:add ServerTask(FutureTask) to taskController;
+				endif
+			else (no)
+				:blocked;
+			endif
+			repeat while (shutdown == false?)
+		end split
+	end fork
+split again
+	:Logger Initialized;
+	fork
+		:LogTask;
+			repeat
+				:Writing logs;
+				:sleep 10 secs;
+			repeat while (shutdown == false?)
+		stop
+		end fork
+split again
+	:ParalleCache Initialized;
+	fork
+		:CleanCacheTask;
+		repeat
+			:Cleaning Cache;
+			:sleep 10 secs;
+		repeat while (shutdown == false?)
+		stop
+	end fork
+end split
+stop
+@enduml
+
+ */
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -21,8 +91,8 @@ public class ConcurrentServer {
 	private static volatile boolean stopped = false;
 	private static LinkedBlockingQueue<Socket> pendingConnections;
 	private static ConcurrentMap<String, ConcurrentMap<Command, ServerTask<?>>> taskController;
-	private static Thread requestThread;
-	private static RequestTask task;
+	private static Thread requestTaskThread;
+	private static RequestTask requestTask;
 	private static ServerSocket serverSocket;
 
 	public static void main(String[] args) throws IOException {
@@ -30,9 +100,9 @@ public class ConcurrentServer {
 		Logger.initializeLog();
 		pendingConnections = new LinkedBlockingQueue<Socket>();
 		taskController = new ConcurrentHashMap<String, ConcurrentMap<Command, ServerTask<?>>>();
-		task = new RequestTask(pendingConnections, taskController);
-		requestThread = new Thread(task);
-		requestThread.start();
+		requestTask = new RequestTask(pendingConnections, taskController);
+		requestTaskThread = new Thread(requestTask);
+		requestTaskThread.start();
 
 		System.out.println("Initialization completed.");
 
@@ -59,10 +129,10 @@ public class ConcurrentServer {
 
 	private static void finishServer() {
 		System.out.println("Shutting down the server...");
-		task.shutdown();
-		task.terminate();
+		requestTask.shutdown();
+		requestTask.terminate();
 		System.out.println("Shutting down Request task");
-		requestThread.interrupt();
+		requestTaskThread.interrupt();
 		System.out.println("Request task ok");
 		System.out.println("Closing socket");
 		System.out.println("Shutting down logger");
